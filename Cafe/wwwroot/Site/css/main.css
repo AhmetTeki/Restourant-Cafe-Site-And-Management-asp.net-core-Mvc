@@ -836,7 +836,7 @@ input[type="date" i] {
   color: white;
   position: absolute;
   background-color: black;
-  opacity: 0;
+  opacity: 1;
   top: 50%;
   -webkit-transform: translateY(-50%);
   -moz-transform: translateY(-50%);
@@ -1328,7 +1328,7 @@ body {padding-right: 0px !important;}
   height: 100%;
   top: 0;
   left: 0;
-  opacity: 0;
+  opacity: 1;
   -webkit-transition: all 2s;
   -o-transition: all 2s;
   -moz-transition: all 2s;
@@ -1512,7 +1512,7 @@ body {padding-right: 0px !important;}
   top: 0;
   left: 0;
   background-color: rgba(236,29,37,0.8);
-  opacity: 0;
+  opacity: 1;
 }
 
 .overlay-item-gallery:hover {

@@ -17,8 +17,13 @@ namespace Cafe.Controllers
         {
             return View();
         }
+		public IActionResult Menu()
+		{
+			return View();
+		}
 
-        public IActionResult Privacy()
+
+		public IActionResult Privacy()
         {
             return View();
         }
