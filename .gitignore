@@ -1,0 +1,51 @@
+# Visual Studio ile ilgili genel ayarlar
+.vs/
+*.user
+*.suo
+*.userosscache
+*.userprefs
+*.csproj.user
+
+# ASP.NET Core yapı dosyaları
+bin/
+obj/
+*.log
+*.lock.json
+*.db
+*.db-shm
+*.db-wal
+
+# Paket yönetimi
+node_modules/
+wwwroot/lib/
+npm-debug.log*
+yarn-error.log*
+
+# Uygulama ayarları
+appsettings.json
+appsettings.Development.json
+
+# Publish ile ilgili dosyalar
+publish/
+out/
+
+# Logs ve kullanılmayan geçici dosyalar
+*.nlog
+*.log
+*.bak
+*.swp
+*.orig
+*.tmp
+
+# User Secrets (Kullanıcı Gizli Bilgileri)
+secrets.json
+*.secret
+
+# MacOS ve Linux sistem dosyaları
+.DS_Store
+*.swp
+Thumbs.db
+
+# Rider IDE dosyaları
+.idea/
+*.idea/
