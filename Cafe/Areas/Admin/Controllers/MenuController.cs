@@ -14,10 +14,12 @@ namespace Cafe.Areas.Admin.Controllers
     public class MenuController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _he;   
 
-        public MenuController(ApplicationDbContext context)
+        public MenuController(ApplicationDbContext context, IWebHostEnvironment he)
         {
             _context = context;
+            _he = he;
         }
 
         // GET: Admin/Menu
@@ -58,14 +60,34 @@ namespace Cafe.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,Image,Price,CatagoryId")] Menu menu)
+        public async Task<IActionResult> Create( Menu menu)
         {
+            var files = HttpContext.Request.Form.Files;
+            if (files.Count>0)
+            {
+                var fileName=Guid.NewGuid().ToString();
+                var upload = Path.Combine(_he.WebRootPath, @"Site\Menu");
+                var ext=Path.GetExtension(files[0].FileName);
+                if (menu.Image != null)
+                {
+                    var imgPath=Path.Combine(_he.WebRootPath,menu.Image.TrimStart('\\'));
+                    if (System.IO.File.Exists(imgPath))
+                    {
+                        System.IO.File.Delete(imgPath);
+                    }
+                }
+                using (var filesStreams = new FileStream(Path.Combine(upload, fileName + ext), FileMode.Create))
+                {
+                    files[0].CopyTo(filesStreams);
+                }
+            menu.Image = @"\Site\Menu\" + fileName + ext;
+            }
            
                 _context.Add(menu);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             
-            ViewData["CatagoryId"] = new SelectList(_context.Catagory, "Id", "Id", menu.CatagoryId);
+           
             return View(menu);
         }
 
@@ -91,36 +113,38 @@ namespace Cafe.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Image,Price,CatagoryId")] Menu menu)
+        public async Task<IActionResult> Edit(Menu menu)
         {
-            if (id != menu.Id)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
-                try
+                var files = HttpContext.Request.Form.Files;
+                if (files.Count > 0)
                 {
-                    _context.Update(menu);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!MenuExists(menu.Id))
+                    var fileName = Guid.NewGuid().ToString();
+                    var upload = Path.Combine(_he.WebRootPath, @"Site\Menu");
+                    var ext = Path.GetExtension(files[0].FileName);
+                    if (menu.Image != null)
                     {
-                        return NotFound();
+                        var imgPath = Path.Combine(_he.WebRootPath, menu.Image.TrimStart('\\'));
+                        if (System.IO.File.Exists(imgPath))
+                        {
+                            System.IO.File.Delete(imgPath);
+                        }
                     }
-                    else
+                    using (var filesStreams = new FileStream(Path.Combine(upload, fileName + ext), FileMode.Create))
                     {
-                        throw;
+                        files[0].CopyTo(filesStreams);
                     }
+                    menu.Image = @"\Site\Menu\" + fileName + ext;
                 }
+                _context.Update(menu);
+                await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CatagoryId"] = new SelectList(_context.Catagory, "Id", "Id", menu.CatagoryId);
             return View(menu);
         }
+       
 
         // GET: Admin/Menu/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -151,6 +175,11 @@ namespace Cafe.Areas.Admin.Controllers
                 return Problem("Entity set 'ApplicationDbContext.Menu'  is null.");
             }
             var menu = await _context.Menu.FindAsync(id);
+            var imgPath = Path.Combine(_he.WebRootPath, menu.Image.TrimStart('\\'));
+            if (System.IO.File.Exists(imgPath))
+            {
+                System.IO.File.Delete(imgPath);
+            }
             if (menu != null)
             {
                 _context.Menu.Remove(menu);
