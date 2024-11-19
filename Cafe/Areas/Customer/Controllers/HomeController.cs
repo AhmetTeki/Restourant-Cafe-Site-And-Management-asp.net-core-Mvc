@@ -1,4 +1,5 @@
-﻿using Cafe.Models;
+﻿using Cafe.Data;
+using Cafe.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -8,15 +9,24 @@ namespace Cafe.Areas.Customer.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _db;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db)
         {
             _logger = logger;
+            _db = db;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var menus=_db.Menu.ToList();
+            return View(menus);
+        }
+        public IActionResult CategoryDetay(int id)
+        {
+            var menu= _db.Menu.Where(i=>i.Catagory.Id==id).ToList();
+            ViewBag.KategoriId = id;
+            return View(menu);
         }
         public IActionResult Contact()
         {
@@ -40,7 +50,8 @@ namespace Cafe.Areas.Customer.Controllers
         }
         public IActionResult Menu()
         {
-            return View();
+            var menu = _db.Menu.ToList();
+            return View(menu);
         }
 
 
