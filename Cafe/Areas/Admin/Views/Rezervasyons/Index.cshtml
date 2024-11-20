@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Cafe.Models.Rezervasyon>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Randevular</h1>
+
+
+<table class="table" id="myTable">
+    <thead>
+        <tr>
+            <th>
+                İsim
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Telefon No
+            </th>
+            <th>
+               Kişi Sayı
+            </th>
+            <th>
+               Randevu Saati
+            </th>
+            <th>
+               Randevu Tarihi
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TelefonNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sayı)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Saat)
+            </td>
+            <td>
+                @item.Tarih.ToShortDateString()
+            </td>
+            <td>
+ 
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger" >Sil</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+@section Scripts{
+    <script type="text/javascript">
+        let table = new DataTable('#myTable');
+    </script>
+}
