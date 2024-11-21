@@ -1,0 +1,28 @@
+﻿@model Cafe.Models.About
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h3>Silmek İstediğini Emin Misin?</h3>
+<div>
+
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+           Konu
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Sil" class="btn btn-danger mt-3" /> |
+        <a asp-action="Index" class="btn btn-warning mt-3">Listeye Geri Dön</a>
+    </form>
+</div>

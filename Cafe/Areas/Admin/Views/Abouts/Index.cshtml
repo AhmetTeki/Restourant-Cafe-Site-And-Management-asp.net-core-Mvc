@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Cafe.Models.About>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Konu Ekle</a>
+</p>
+<table class="table" id="myTable">
+    <thead>
+        <tr>
+            <th>
+              Konu
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Düzenle</a> |
+                <a class=" btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Sil</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+@section Scripts{
+    <script type="text/javascript">
+        let table = new DataTable('#myTable');
+    </script>
+}
