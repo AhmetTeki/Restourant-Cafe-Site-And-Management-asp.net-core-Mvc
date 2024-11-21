@@ -13,5 +13,6 @@ namespace Cafe.Data
         public DbSet<Catagory> Catagory { get; set; }
         public DbSet<Menu> Menu { get; set; }
 		public DbSet<Rezervasyon> Rezervasyon { get; set; }
+		public DbSet<Galeri> Galeri { get; set; }
 	}
 }

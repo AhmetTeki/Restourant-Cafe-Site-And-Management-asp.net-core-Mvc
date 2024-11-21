@@ -43,7 +43,8 @@ namespace Cafe.Areas.Customer.Controllers
         }
         public IActionResult Galeri()
         {
-            return View();
+            var galeri=_db.Galeri.ToList();
+            return View(galeri);
         }
         //**************************************************************************************
         public IActionResult Rezervasyon()
