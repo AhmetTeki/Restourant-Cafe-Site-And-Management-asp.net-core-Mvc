@@ -31,12 +31,30 @@ namespace Cafe.Areas.Customer.Controllers
             ViewBag.KategoriId = id;
             return View(menu);
         }
-        public IActionResult Contact()
-        {
-            return View();
-        }
-        //***************************************************************************************************
-        public IActionResult Blog()
+		// GET: Admin/Contacts/Create
+		public IActionResult Contact()
+		{
+			return View();
+		}
+
+		// POST: Admin/Contacts/Create
+		// To protect from overposting attacks, enable the specific properties you want to bind to.
+		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Contact( Contact contact)
+		{
+			if (ModelState.IsValid)
+			{
+                contact.Tarih=DateTime.Now;
+				_db.Add(contact);
+				await _db.SaveChangesAsync();
+				return RedirectToAction(nameof(Index));
+			}
+			return View(contact);
+		}
+		//***************************************************************************************************
+		public IActionResult Blog()
         {
             return View();
         }

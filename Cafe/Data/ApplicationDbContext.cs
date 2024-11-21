@@ -16,5 +16,6 @@ namespace Cafe.Data
 		public DbSet<Galeri> Galeri { get; set; }
 		public DbSet<About> About { get; set; }
         public DbSet<Blog> Blog { get; set; }
-    }
+		public DbSet<Contact> Contact { get; set; }
+	}
 }

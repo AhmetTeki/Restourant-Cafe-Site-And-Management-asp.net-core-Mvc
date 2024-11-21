@@ -1,4 +1,4 @@
-﻿
+﻿@model Cafe.Models.Contact
 @{
     ViewData["Title"] = "Contact";
     Layout = "~/Views/Shared/_ALayout.cshtml";
@@ -18,25 +18,27 @@
 	<!-- Map -->
 	<div class="container">
 		<div class="map bo8 bo-rad-10 of-hidden">
-			<div class="contact-map size37" id="google_map" data-map-x="40.704644" data-map-y="-74.011987" data-pin="/Site/images/icons/icon-position-map.png" data-scrollwhell="0" data-draggable="1"></div>
+			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d422155.88195142103!2d39.09730353629546!3d38.021486963667535!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4075ef0d350aee05%3A0x4f822ad8ff8af422!2sGerger%2C%20Ad%C4%B1yaman!5e0!3m2!1str!2str!4v1732209736019!5m2!1str!2str" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 		</div>
 	</div>
 
 	<div class="container">
 		<h3 class="tit7 t-center p-b-62 p-t-105">
-			Send us a Message
+			Bizimle İletişime Geçin
 		</h3>
 
-		<form class="wrap-form-reservation size22 m-l-r-auto">
+		<form class="wrap-form-reservation size22 m-l-r-auto" asp-action="Contact">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 			<div class="row">
 				<div class="col-md-4">
 					<!-- Name -->
 					<span class="txt9">
-						Name
+						İsim
 					</span>
 
 					<div class="wrap-inputname size12 bo2 bo-rad-10 m-t-3 m-b-23">
-						<input class="bo-rad-10 sizefull txt10 p-l-20" type="text" name="name" placeholder="Name">
+						<input class="bo-rad-10 sizefull txt10 p-l-20" type="text" asp-for="Name" placeholder="Name">
+						<span asp-validation-for="Name" class="text-danger"></span>
 					</div>
 				</div>
 
@@ -47,34 +49,37 @@
 					</span>
 
 					<div class="wrap-inputemail size12 bo2 bo-rad-10 m-t-3 m-b-23">
-						<input class="bo-rad-10 sizefull txt10 p-l-20" type="text" name="email" placeholder="Email">
+						<input class="bo-rad-10 sizefull txt10 p-l-20" type="text" asp-for="Email" placeholder="Email">
+						<span asp-validation-for="Email" class="text-danger"></span>
 					</div>
 				</div>
 
 				<div class="col-md-4">
 					<!-- Phone -->
 					<span class="txt9">
-						Phone
+						Telefon Numarası
 					</span>
 
 					<div class="wrap-inputphone size12 bo2 bo-rad-10 m-t-3 m-b-23">
-						<input class="bo-rad-10 sizefull txt10 p-l-20" type="text" name="phone" placeholder="Phone">
+						<input class="bo-rad-10 sizefull txt10 p-l-20" type="text" asp-for="TelefonNo" placeholder="Phone">
+						<span asp-validation-for="TelefonNo" class="text-danger"></span>
 					</div>
 				</div>
 
 				<div class="col-12">
 					<!-- Message -->
 					<span class="txt9">
-						Message
+						Mesajınız
 					</span>
-					<textarea class="bo-rad-10 size35 bo2 txt10 p-l-20 p-t-15 m-b-10 m-t-3" name="message" placeholder="Message"></textarea>
+					<textarea class="bo-rad-10 size35 bo2 txt10 p-l-20 p-t-15 m-b-10 m-t-3" asp-for="Mesaj" placeholder="Message"></textarea>
+					<span asp-validation-for="Mesaj" class="text-danger"></span>
 				</div>
 			</div>
 
 			<div class="wrap-btn-booking flex-c-m m-t-13">
 				<!-- Button3 -->
 				<button type="submit" class="btn3 flex-c-m size36 txt11 trans-0-4">
-					Submit
+					Kaydet
 				</button>
 			</div>
 		</form>
@@ -82,4 +87,8 @@
 		
 	</div>
 </section>
-
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}
