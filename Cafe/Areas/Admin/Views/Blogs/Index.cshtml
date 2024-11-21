@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Cafe.Models.Blog>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<table id="myTable" class="table">
+    <thead>
+        <tr>
+            <th>
+                Resim
+            </th>
+            <th>
+                Email
+            </th>
+            
+            <th>
+                Yorum
+            </th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                    <img src="@Html.DisplayFor(modelItem => item.Image)" style="width: 100%; height: 100px; object-fit: cover;">
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Mesage)
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Yorumu Sil</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+@section Scripts{
+    <script type="text/javascript">
+        let table = new DataTable('#myTable');
+    </script>
+}

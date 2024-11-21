@@ -11,11 +11,13 @@ namespace Cafe.Areas.Customer.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _db;
+        private readonly IWebHostEnvironment _he;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, IWebHostEnvironment he)
         {
             _logger = logger;
             _db = db;
+            _he = he;
         }
 
         public IActionResult Index()
@@ -33,10 +35,48 @@ namespace Cafe.Areas.Customer.Controllers
         {
             return View();
         }
+        //***************************************************************************************************
         public IActionResult Blog()
         {
             return View();
         }
+
+        // POST: Admin/Blogs/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Blog(Blog blog)
+        {
+            blog.Tarih=DateTime.Now;
+            var files = HttpContext.Request.Form.Files;
+            if (files.Count > 0)
+            {
+                var fileName = Guid.NewGuid().ToString();
+                var upload = Path.Combine(_he.WebRootPath, @"Site\Menu");
+                var ext = Path.GetExtension(files[0].FileName);
+                if (blog.Image != null)
+                {
+                    var imgPath = Path.Combine(_he.WebRootPath, blog.Image.TrimStart('\\'));
+                    if (System.IO.File.Exists(imgPath))
+                    {
+                        System.IO.File.Delete(imgPath);
+                    }
+                }
+                using (var filesStreams = new FileStream(Path.Combine(upload, fileName + ext), FileMode.Create))
+                {
+                    files[0].CopyTo(filesStreams);
+                }
+                blog.Image = @"\Site\Menu\" + fileName + ext;
+            }
+
+            _db.Add(blog);
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+
+            return View(blog);
+        }
+        //**************************************************************************************************
         public IActionResult About()
         {
             var about=_db.About.ToList();
