@@ -17,5 +17,6 @@ namespace Cafe.Data
 		public DbSet<About> About { get; set; }
         public DbSet<Blog> Blog { get; set; }
 		public DbSet<Contact> Contact { get; set; }
+		public DbSet<ApplicationUser> ApplicationUser { get; set; }
 	}
 }
