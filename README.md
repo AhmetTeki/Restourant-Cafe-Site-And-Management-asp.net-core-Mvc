@@ -3,7 +3,7 @@ Asp.Net Core MVC kullanarak bir restourant yönetim sitesi yaptım. Bu sitede he
 1-)PRORAMIN DOĞRU ÇALIŞABİLMESİ İÇİN AŞAĞIDAKİ ADIMLARI SIRASI İLE UYGULAYINIZ
 2-)CAFE KLOSÖRÜNÜN ALTINA appsettings.json ADINDA BİR DOSYA EKLEYİN. ARDINDAN BU DOSYANIN İÇİNE AŞAĞIDAKİ KODLARI EKLEYİN
 
-
+```json
 {
   "ConnectionStrings": {
     "DefaultConnection": "YOUR DB Path"
@@ -16,7 +16,7 @@ Asp.Net Core MVC kullanarak bir restourant yönetim sitesi yaptım. Bu sitede he
   },
   "AllowedHosts": "*"
 }
-
+```
 
 4-)ARDINDAN YOUR DB PATH YAZAN YERE KENDİ DATABASE YOLUNUZU YAZINIZ
 5-)ARDINDAN TERMİNALİ AÇARAK MİGRATİON OLUŞTURUN VE GÜNCELLEYİN
